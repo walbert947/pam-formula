@@ -22,6 +22,8 @@
   merge=salt['pillar.get']('pam:lookup'))
 %}
 
+{% do default_settings.pam.update(os_family_map) %}
+
 {% set pam_settings = salt['pillar.get'](
     'pam',
     default=default_settings.pam,
