@@ -1,0 +1,2 @@
+pam:
+  name_source: 'local'

@@ -1,0 +1,30 @@
+{% import_yaml 'pam/defaults.yaml' as default_settings %}
+
+{% set os_family_map = salt['grains.filter_by']({
+    'Debian': {
+        'files': [
+            'common-account',
+            'common-auth',
+            'common-password',
+            'common-session',
+        ],
+    },
+    'RedHat': {
+        'files': [
+            'fingerprint-auth',
+            'password-auth',
+            'smartcard-auth',
+            'system-auth',
+        ],
+    },
+  },
+  grain="os_family",
+  merge=salt['pillar.get']('pam:lookup'))
+%}
+
+{% set pam_settings = salt['pillar.get'](
+    'pam',
+    default=default_settings.pam,
+    merge=True
+  )
+%}
